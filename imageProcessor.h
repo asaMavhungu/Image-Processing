@@ -1,6 +1,10 @@
 #ifndef _imageProcessor_h
 #define _imageProcessor_h
 
+#include "connectedComponent.h"
+
+#include <string>
+
 namespace MVHASA001
 {
 
