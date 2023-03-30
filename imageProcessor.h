@@ -11,7 +11,15 @@ namespace MVHASA001
 
 	class PGMimageProcessor
 	{
-	   
+		private:
+			int width, height;
+			char *id;
+			unsigned char * source;
+			int sourceSize;
+			std::string comment;
+
+		public:
+
 		/* process the input image to extract all the connected components,
 		based on the supplied threshold (0...255) and excluding any components
 		of less than the minValidSize. The final number of components that
@@ -47,11 +55,14 @@ namespace MVHASA001
 		print out to std::cout: component ID, number of pixels
 		*/
 		void printComponentData(const ConnectedComponent & theComponent) const;
+		
+		
+		void readImage(std::string filename);
+		void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
 	};
 
-	void readImage(std::string filename);
-	void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
+	
 
 }
 
