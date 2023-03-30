@@ -10,13 +10,13 @@ namespace MVHASA001
 	class ConnectedComponent
 	{
 		private:
-			vector<int> points;
+			std::vector< std::pair<int,int> > points;
 		public:
 			ConnectedComponent(int index); // default construct
-			virtual ~ConnectedComponent() = default; // default destruct
+			~ConnectedComponent(); // default destruct
 
-			ConnectedComponent(const ConnectedComponent & rhs) = default; // copy
-			ConnectedComponent & operator=(const ConnectedComponent & rhs) = default;
+			ConnectedComponent(const ConnectedComponent & rhs); // copy
+			ConnectedComponent & operator=(const ConnectedComponent & rhs);
 
 			ConnectedComponent(ConnectedComponent && rhs) : points(move(rhs.points)) {}; // move
 			ConnectedComponent & operator=(ConnectedComponent && rhs)
