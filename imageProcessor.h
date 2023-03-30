@@ -58,6 +58,7 @@ namespace MVHASA001
 		
 		
 		void readImage(std::string filename);
+		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
 		void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
 	};
