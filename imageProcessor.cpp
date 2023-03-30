@@ -5,6 +5,9 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <queue>
+
+using namespace std;
 
 void MVHASA001::PGMimageProcessor::readImage(std::string filename)
 {
@@ -52,4 +55,21 @@ void MVHASA001::PGMimageProcessor::readImage(std::string filename)
 	this->width = width;
 	this->sourceSize = width * height;
 	in.close();
+}
+
+
+void MVHASA001::PGMimageProcessor::process(vector<vector<unsigned char>> &image, int threshold,int width, int height)
+{
+	int row = 0;
+	int col = 0;
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			image[y][x] = (image[y][x] > threshold) ? 255 : 0;
+		}
+
+	}
+
 }
