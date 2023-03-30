@@ -69,6 +69,7 @@ void MVHASA001::PGMimageProcessor::readImage(std::string filename)
 
 	this->comment = comment;
 	this->source = &pixels; // move the pixel data to the class instance
+	this->sourceProcessed = pixels;
 	this->height = height;
 	this->width = width;
 	this->sourceSize = width * height;
@@ -90,4 +91,89 @@ void MVHASA001::PGMimageProcessor::process(vector<vector<unsigned char>> &image,
 
 	}
 
+}
+
+// Check if the given row and column are within bounds
+bool isSafe(int row, int col, int numRows, int numCols) 
+{
+    return (row >= 0 && row < numRows && col >= 0 && col < numCols);
+}
+
+int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize)
+{
+	using namespace std;
+	return 0;
+
+	using namespace std;
+    int numRows = this->height;
+    int numCols = this->width;
+    int numComponents = 0;
+    vector<vector<bool>> visited(numRows, vector<bool>(numCols, false));
+    queue<pair<int, int>> q;
+
+	
+    for (int i = 0; i < numRows; i++) 
+	{
+        for (int j = 0; j < numCols; j++) 
+		{
+
+            if (!visited[i][j]) {
+                q.push(make_pair(i, j));
+                visited[i][j] = true;
+                numComponents++;
+				int size = 0;
+
+                // Start new connected component
+                while (!q.empty()) 
+				{
+                    pair<int, int> p = q.front();
+                    q.pop();
+                    int row = p.first;
+                    int col = p.second;
+
+					++size;
+
+
+                    // Check neighbor pixels
+                    if (isSafe(row-1, col, numRows, numCols) && !visited[row-1][col]
+						&& this->source[row-1][col] == this->source[row][col]) 
+					{
+                        q.push(make_pair(row-1, col));
+                        visited[row-1][col] = true;
+						//cout << "queued" << row-1 << col<< endl;
+                    }
+                    if (isSafe(row+1, col, numRows, numCols) && !visited[row+1][col]
+						&& this->source[row+1][col] == this->source[row][col]) 
+					{
+                        q.push(make_pair(row+1, col));
+                        visited[row+1][col] = true;
+						//cout << "queued" << row+1 << col<< endl;
+                    }
+                    if (isSafe(row, col-1, numRows, numCols) && !visited[row][col-1]
+						&& this->source[row][col-1] == this->source[row][col]) 
+					{
+                        q.push(make_pair(row, col-1));
+                        visited[row][col-1] = true;
+						//cout << "queued" << row << col-1<< endl;
+                    }
+                    if (isSafe(row, col+1, numRows, numCols) && !visited[row][col+1]
+						&& this->source[row][col+1] == this->source[row][col]) 
+					{
+                        q.push(make_pair(row, col+1));
+                        visited[row][col+1] = true;
+						//cout << "queued" << row <<col+1<< endl;
+                    }
+                }
+				if (size <= threshold) 
+				{
+					cout << "did not make component " << size << endl;
+					--numComponents; 
+				}
+				else cout << "made component " << size << endl; 
+				cout << "queue empty" << endl;
+            }
+        }
+    }
+
+    return numComponents;
 }
