@@ -1,4 +1,5 @@
 #include "imageProcessor.h"
+#include "connectedComponent.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -41,16 +42,33 @@ void MVHASA001::PGMimageProcessor::readImage(std::string filename)
 	// Remove whitespace
 	in >> std::ws;
 
-	// Allocate memory pixels
-	unsigned char* buffer = new unsigned char[width * height];
+	// Read pixel data to 2D vector
+    std::vector<std::vector<unsigned char>> pixels(height, std::vector<unsigned char>(width));
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            in.read((char*)&pixels[i][j], 1);
+        }
+    }
 
-	// Read the pixels into the buffer
-	// Convert fron unsigned char to char to avoid type mismatch
-	// because read() expects a char* not 'unsigned char*'
-	in.read(reinterpret_cast<char*>(buffer), width * height);
+    // Set background and forground
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+			// set dummy black and white
+			// will use real colors when doing flood fill
+            if (pixels[i][j] > 128)
+                pixels[i][j] = 254;
+            else
+				pixels[i][j] = 1;
+        }
+    }
+
 
 	this->comment = comment;
-	this->source = buffer;
+	this->source = &pixels; // move the pixel data to the class instance
 	this->height = height;
 	this->width = width;
 	this->sourceSize = width * height;
