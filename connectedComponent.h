@@ -29,6 +29,7 @@ namespace MVHASA001
 
 			friend std::ostream & operator<<(std::ostream & os, const ConnectedComponent& rhs);
 
+			int getSize();
 			void setSize(int i);
 
 			// for sorting
