@@ -39,6 +39,11 @@ namespace MVHASA001
 		return *this;
 	}
 
+	int MVHASA001::ConnectedComponent::getSize()
+	{
+		return this->size;
+	}
+
 	void MVHASA001::ConnectedComponent::setSize(int i)
 	{
 		this->size = i;
