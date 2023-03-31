@@ -219,6 +219,24 @@ namespace MVHASA001
 
 	}
 
+	void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement)
+	{
+		// If the current cell is already the replacement value or is outside the bounds of the matrix, return
+		if (row < 0 || row >= source.size() || col < 0 || col >= source[0].size() || source[row][col] != target) 
+		{
+			return;
+		}
+
+		// Change color
+		source[row][col] = replacement;
+		// std::cout << row << col << std::endl;
+
+		// Recursively fill the neighboring cells
+		floodFill(source, row + 1, col, target, replacement);
+		floodFill(source, row - 1, col, target, replacement);
+		floodFill(source, row, col + 1, target, replacement);
+		floodFill(source, row, col - 1, target, replacement);
+	}
 
 
 }
