@@ -188,7 +188,7 @@ bool MVHASA001::PGMimageProcessor::writeComponents(const std::string & outFileNa
 
 	for (int y = 0; y < this->height; y++) 
 	{
-		file.write(reinterpret_cast<const char*>(this->source[y].data()), this->width); // invalid type conversionC/C++(171)
+		file.write(reinterpret_cast<const char*>(this->source[y].data()), this->width);
 	}
 
 }
