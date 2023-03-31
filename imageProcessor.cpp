@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -273,6 +274,13 @@ namespace MVHASA001
 	int PGMimageProcessor::getComponentCount(void) const
 	{
 		return this->components.size();
+	}
+
+	int PGMimageProcessor::getLargestSize(void) const
+	{
+		std::vector<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
+
+		return it->getSize();
 	}
 
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
