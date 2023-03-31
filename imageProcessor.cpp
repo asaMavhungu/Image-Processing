@@ -283,6 +283,13 @@ namespace MVHASA001
 		return it->getSize();
 	}
 
+	int PGMimageProcessor::getSmallestSize(void) const
+	{
+		std::vector<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
+
+		return it->getSize();
+	}
+
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
 	{
 		for (ConnectedComponent comp : this->components)
