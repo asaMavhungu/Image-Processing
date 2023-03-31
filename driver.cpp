@@ -1,6 +1,7 @@
 #include "imageProcessor.h"
-#include "connectedComponent.h"
 #include <iostream>
+#include <limits>
+
 
 
 int main()
@@ -12,8 +13,9 @@ int main()
 	std::string filename3 = "sample_1280×853.pgm";
 
 	asa.setImage(filename3);
-	//asa.readImage(filename3);
-	cout << asa.extractComponents(200, 12) << " ------";
+
+	cout << asa.extractComponents(128, 30000) << " ------\n";
+
 	asa.writeComponents("sample_out.pgm");
 
 
