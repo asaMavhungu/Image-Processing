@@ -31,6 +31,9 @@ namespace MVHASA001
 
 			void setSize(int i);
 
+			// for sorting
+			bool operator<(const ConnectedComponent& other) const;
+
 	};
 
 } // namespace MVHASA001
