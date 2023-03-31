@@ -223,6 +223,28 @@ namespace MVHASA001
 		return numComponents;
 	}
 
+	int PGMimageProcessor::filterComponentsBySize(int minSize, int maxSize)
+	{
+
+		std::vector<ConnectedComponent>::iterator it = this->components.begin();
+
+		while(it != this->components.end())
+		{
+
+			if (it->getSize() < minSize || it->getSize() > maxSize)
+			{
+				it = this->components.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+
+		}
+
+		return this->components.size();
+	}
+
 	bool PGMimageProcessor::writeComponents(const std::string & outFileName)
 	{
 		std::ostringstream oss;
