@@ -14,6 +14,7 @@ namespace MVHASA001
 		private:
 			int width, height;
 			char *id;
+			std::string sourceName;
 			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
 			int sourceSize;
@@ -57,8 +58,8 @@ namespace MVHASA001
 		*/
 		void printComponentData(const ConnectedComponent & theComponent) const;
 		
-		
-		void readImage(std::string filename);
+		void setImage(std::string filename);
+		void readImage(std::string filename, unsigned char threshold);
 		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
 		void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
