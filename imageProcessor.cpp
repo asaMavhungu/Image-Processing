@@ -269,6 +269,12 @@ namespace MVHASA001
 
 	}
 
+
+	int PGMimageProcessor::getComponentCount(void) const
+	{
+		return this->components.size();
+	}
+
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
 	{
 		for (ConnectedComponent comp : this->components)
