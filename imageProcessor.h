@@ -23,6 +23,8 @@ namespace MVHASA001
 
 		public:
 
+		friend void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement);
+
 		/* process the input image to extract all the connected components,
 		based on the supplied threshold (0...255) and excluding any components
 		of less than the minValidSize. The final number of components that
@@ -62,7 +64,7 @@ namespace MVHASA001
 		void setImage(std::string filename);
 		void readImage(std::string filename, unsigned char threshold);
 		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
-		void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
+		//void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
 		std::vector<ConnectedComponent>& getComponents()
 		{
@@ -75,7 +77,7 @@ namespace MVHASA001
 			std::cout << "added comp " << comp << std::endl;
 		}
 
-		friend void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement);
+		
 
 	};
 
