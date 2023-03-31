@@ -17,6 +17,7 @@ namespace MVHASA001
 			std::string sourceName;
 			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
+			std::vector<ConnectedComponent> components;
 			int sourceSize;
 			std::string comment;
 
