@@ -4,7 +4,7 @@
 #include "connectedComponent.h"
 
 #include <string>
-
+#include <iostream>
 namespace MVHASA001
 {
 
@@ -63,6 +63,17 @@ namespace MVHASA001
 		void readImage(std::string filename, unsigned char threshold);
 		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
 		void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
+
+		std::vector<ConnectedComponent>& getComponents()
+		{
+			return components;
+		}
+
+		bool addComponent(ConnectedComponent comp)
+		{
+			this->components.push_back(comp);
+			std::cout << "added comp " << comp << std::endl;
+		}
 
 	};
 
