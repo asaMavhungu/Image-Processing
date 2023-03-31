@@ -14,7 +14,7 @@ namespace MVHASA001
 		private:
 			int width, height;
 			char *id;
-			std::vector<std::vector<unsigned char>> * source;
+			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
 			int sourceSize;
 			std::string comment;
