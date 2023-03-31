@@ -10,12 +10,13 @@ int main()
 	using namespace std;
 	
 	PGMimageProcessor asa;
-	std::string filename3 = "sample_1280×853.pgm";
+	std::string filename3 = "chess.pgm";
 
 	asa.setImage(filename3);
-
-	cout << asa.extractComponents(128, 30000) << " ------\n";
-
+	// 177/178 for chess
+	cout << asa.extractComponents(177, 60) << " ------\n";
+	cout << asa.getComponents()[0] <<" ONE\n";
+	cout << asa.getComponents()[2] <<" ONE\n";
 	asa.writeComponents("sample_out.pgm");
 
 
