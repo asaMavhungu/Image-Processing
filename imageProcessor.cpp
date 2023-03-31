@@ -1,5 +1,4 @@
 #include "imageProcessor.h"
-#include "connectedComponent.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -9,6 +8,7 @@
 #include <queue>
 
 using namespace std;
+using namespace MVHASA001;
 
 void MVHASA001::PGMimageProcessor::setImage(string filename)
 {
@@ -131,12 +131,17 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
 
                 // Start new connected component
 				// TODO make array to hold the pixels(x, y) changed to store in component
+				ConnectedComponent *comp = new ConnectedComponent(numComponents);
+				//cout << comp->getSize() << size << endl;
                 while (!q.empty()) 
 				{
                     pair<int, int> p = q.front();
                     q.pop();
                     int row = p.first;
                     int col = p.second;
+
+					std::pair<int,int> p1 = std::make_pair(i,j);
+					*comp += p1;
 
 					++size;
 
@@ -175,13 +180,25 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
 				{
 					//cout << "did not make component " << size << endl;
 					// TODO make and not make components
+					delete comp;
 					--numComponents; 
 				}
-				// else cout << "made component " << size << endl; 
+				else 
+				{
+					cout << "made component " << size << endl; 
+					comp->setSize(size);
+					cout << comp << endl;
+					this->addComponent(*comp);
+					//cout << this->components[0] <<" ONE\n";
+				}
 				//cout << "queue empty" << endl;
             }
         }
     }
+	
+	
+	cout << this->getComponents()[0] <<" ONE\n";
+	cout << this->getComponents()[2] <<" ONE\n";
 
     return numComponents;
 }
@@ -199,5 +216,7 @@ bool MVHASA001::PGMimageProcessor::writeComponents(const std::string & outFileNa
 	{
 		file.write(reinterpret_cast<const char*>(this->source[y].data()), this->width);
 	}
+
+	return true;
 
 }
