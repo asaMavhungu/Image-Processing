@@ -50,6 +50,11 @@ namespace MVHASA001
 		return os;
 	}
 
+	bool ConnectedComponent::operator<(const ConnectedComponent& other) const
+	{
+		return this->size < other.size;
+	}
+
 
 
 }
