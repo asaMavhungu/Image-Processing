@@ -10,9 +10,10 @@ namespace MVHASA001
 	class ConnectedComponent
 	{
 		private:
+			char *id;
 			std::vector< std::pair<int,int> > points;
 		public:
-			ConnectedComponent(int index); // default construct
+			ConnectedComponent(); // default construct
 			~ConnectedComponent(); // default destruct
 
 			ConnectedComponent(const ConnectedComponent & rhs); // copy
@@ -27,6 +28,8 @@ namespace MVHASA001
 					return *this;
 				}
 			}
+
+			ConnectedComponent & operator+=(const std::pair<int,int> & rhs);
 	};
 	
 
