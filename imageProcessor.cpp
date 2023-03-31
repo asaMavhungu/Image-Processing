@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void MVHASA001::PGMimageProcessor::readImage(std::string filename)
+void MVHASA001::PGMimageProcessor::readImage(string filename)
 {
 	std::ifstream in(filename, std::ios::binary);
 
@@ -68,8 +68,7 @@ void MVHASA001::PGMimageProcessor::readImage(std::string filename)
 
 
 	this->comment = comment;
-	this->source = &pixels; // move the pixel data to the class instance
-	this->sourceProcessed = pixels;
+	this->source = std::move(pixels); // move the pixel data to the class instance
 	this->height = height;
 	this->width = width;
 	this->sourceSize = width * height;
@@ -164,7 +163,7 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
 						//cout << "queued" << row <<col+1<< endl;
                     }
                 }
-				if (size <= threshold) 
+				if (size <= minValidSize) 
 				{
 					cout << "did not make component " << size << endl;
 					--numComponents; 
