@@ -241,6 +241,14 @@ namespace MVHASA001
 
 	}
 
+	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
+	{
+		for (ConnectedComponent comp : this->components)
+		{
+			std::cout << comp << std::endl; 
+		}
+	}
+
 	
 
 
