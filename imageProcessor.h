@@ -75,6 +75,8 @@ namespace MVHASA001
 			std::cout << "added comp " << comp << std::endl;
 		}
 
+		friend void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement);
+
 	};
 
 	
