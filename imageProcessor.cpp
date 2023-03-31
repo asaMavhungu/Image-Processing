@@ -203,6 +203,7 @@ namespace MVHASA001
 					{
 						//cout << "did not make component " << size << endl;
 						// TODO make and not make components
+						// Paint out the now-invalid component
 						floodFill(this->source, i, j, 255, 0);
 						delete comp;
 						--numComponents; 
@@ -233,6 +234,11 @@ namespace MVHASA001
 
 			if (it->getSize() < minSize || it->getSize() > maxSize)
 			{
+				std::pair<int,int> p = it->getPoint();
+				int row = p.first;
+				int col = p.second;
+				// Paint out the now-invalid component
+				floodFill(this->source, row, col, 255, 0);
 				it = this->components.erase(it);
 			}
 			else
