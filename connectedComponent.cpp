@@ -44,7 +44,7 @@ namespace MVHASA001
 		return this->points[0];
 	}
 
-	int MVHASA001::ConnectedComponent::getSize()
+	int MVHASA001::ConnectedComponent::getSize() const
 	{
 		return this->size;
 	}

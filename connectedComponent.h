@@ -31,7 +31,7 @@ namespace MVHASA001
 
 			std::pair<int,int> getPoint();
 
-			int getSize();
+			int getSize() const;
 			void setSize(int i);
 
 			// for sorting
