@@ -2,6 +2,7 @@
 #define _connectedComponent_h
 
 #include <vector>
+#include <ostream>
 
 namespace MVHASA001
 {
@@ -10,29 +11,27 @@ namespace MVHASA001
 	class ConnectedComponent
 	{
 		private:
-			char *id;
+			int id;
+			int size = 0;
 			std::vector< std::pair<int,int> > points;
 		public:
 			ConnectedComponent(); // default construct
+			ConnectedComponent(int x);
 			~ConnectedComponent(); // default destruct
 
 			ConnectedComponent(const ConnectedComponent & rhs); // copy
 			ConnectedComponent & operator=(const ConnectedComponent & rhs);
 
-			ConnectedComponent(ConnectedComponent && rhs) : points(move(rhs.points)) {}; // move
-			ConnectedComponent & operator=(ConnectedComponent && rhs)
-			{
-				if (this != &rhs)
-				{
-					this->points = move(rhs.points);
-					return *this;
-				}
-			}
+			ConnectedComponent(ConnectedComponent && rhs); // move
+			ConnectedComponent & operator=(ConnectedComponent && rhs);
 
 			ConnectedComponent & operator+=(const std::pair<int,int> & rhs);
-	};
-	
 
+			friend std::ostream & operator<<(std::ostream & os, const ConnectedComponent& rhs);
+
+			void setSize(int i);
+
+	};
 
 } // namespace MVHASA001
 
