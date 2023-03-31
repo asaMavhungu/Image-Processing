@@ -203,6 +203,7 @@ namespace MVHASA001
 					{
 						//cout << "did not make component " << size << endl;
 						// TODO make and not make components
+						floodFill(this->source, i, j, 255, 0);
 						delete comp;
 						--numComponents; 
 					}
@@ -210,6 +211,7 @@ namespace MVHASA001
 					{
 						comp->setSize(size);
 						this->addComponent(*comp);
+						delete comp;
 						//cout << this->components[0] <<" ONE\n";
 					}
 					//cout << "queue empty" << endl;
