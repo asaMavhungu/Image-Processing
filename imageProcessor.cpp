@@ -10,7 +10,12 @@
 
 using namespace std;
 
-void MVHASA001::PGMimageProcessor::readImage(string filename)
+void MVHASA001::PGMimageProcessor::setImage(string filename)
+{
+	this->sourceName = filename;
+}
+
+void MVHASA001::PGMimageProcessor::readImage(string filename, unsigned char threshold)
 {
 	std::ifstream in(filename, std::ios::binary);
 
@@ -51,6 +56,8 @@ void MVHASA001::PGMimageProcessor::readImage(string filename)
             in.read((char*)&pixels[i][j], 1);
         }
     }
+	// TODO make sure sont need original data
+	// this->source = pixels; // save original sorce
 
     // Set background and forground
     for (int i = 0; i < height; i++)
@@ -59,7 +66,7 @@ void MVHASA001::PGMimageProcessor::readImage(string filename)
         {
 			// set dummy black and white
 			// will use real colors when doing flood fill
-            if (pixels[i][j] > 128)
+            if (pixels[i][j] > threshold)
                 pixels[i][j] = 254;
             else
 				pixels[i][j] = 1;
@@ -101,9 +108,9 @@ bool isSafe(int row, int col, int numRows, int numCols)
 int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize)
 {
 	using namespace std;
-	return 0;
 
-	using namespace std;
+	readImage(this->sourceName, threshold);
+
     int numRows = this->height;
     int numCols = this->width;
     int numComponents = 0;
@@ -123,6 +130,7 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
 				int size = 0;
 
                 // Start new connected component
+				// TODO make array to hold the pixels(x, y) changed to store in component
                 while (!q.empty()) 
 				{
                     pair<int, int> p = q.front();
@@ -165,11 +173,12 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
                 }
 				if (size <= minValidSize) 
 				{
-					cout << "did not make component " << size << endl;
+					//cout << "did not make component " << size << endl;
+					// TODO make and not make components
 					--numComponents; 
 				}
-				else cout << "made component " << size << endl; 
-				cout << "queue empty" << endl;
+				// else cout << "made component " << size << endl; 
+				//cout << "queue empty" << endl;
             }
         }
     }
