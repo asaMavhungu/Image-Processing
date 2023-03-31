@@ -176,3 +176,19 @@ int MVHASA001::PGMimageProcessor::extractComponents(unsigned char threshold, int
 
     return numComponents;
 }
+
+bool MVHASA001::PGMimageProcessor::writeComponents(const std::string & outFileName)
+{
+	std::ostringstream oss;
+	std::ofstream file(outFileName, std::ios::binary);
+	file << "P5" << std::endl;
+    file << this->width << " " << this->height << std::endl;
+    file << "255" << std::endl;
+
+
+	for (int y = 0; y < this->height; y++) 
+	{
+		file.write(reinterpret_cast<const char*>(this->source[y].data()), this->width); // invalid type conversionC/C++(171)
+	}
+
+}
