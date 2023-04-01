@@ -39,7 +39,7 @@ namespace MVHASA001
 		return *this;
 	}
 
-	std::pair<int,int> ConnectedComponent::getPoint()
+	std::pair<int,int> ConnectedComponent::getPoint() const
 	{	
 		return this->points[0];
 	}

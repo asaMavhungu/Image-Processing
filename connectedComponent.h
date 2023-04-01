@@ -29,7 +29,7 @@ namespace MVHASA001
 
 			friend std::ostream & operator<<(std::ostream & os, const ConnectedComponent& rhs);
 
-			std::pair<int,int> getPoint();
+			std::pair<int,int> getPoint() const;
 
 			int getSize() const;
 			void setSize(int i);
