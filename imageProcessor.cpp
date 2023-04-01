@@ -85,23 +85,6 @@ namespace MVHASA001
 		in.close();
 	}
 
-
-	void PGMimageProcessor::process(vector<vector<unsigned char>> &image, int threshold,int width, int height)
-	{
-		int row = 0;
-		int col = 0;
-
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				image[y][x] = (image[y][x] > threshold) ? 255 : 0;
-			}
-
-		}
-
-	}
-
 	// Check if the given row and column are within bounds
 	bool isSafe(int row, int col, int numRows, int numCols) 
 	{
@@ -111,7 +94,7 @@ namespace MVHASA001
 	void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement)
 	{
 		// If the current cell is already the replacement value or is outside the bounds of the matrix, return
-		if (row < 0 || row >= source.size() || col < 0 || col >= source[0].size() || source[row][col] != target) 
+		if (row < 0 || row >= int(source.size()) || col < 0 || col >= int(source[0].size()) || source[row][col] != target) 
 		{
 			std::cout << row << " " << col << " " << target << std::endl;
 			return;
@@ -297,10 +280,7 @@ namespace MVHASA001
 
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
 	{
-		for (ConnectedComponent comp : this->components)
-		{
-			std::cout << comp << std::endl; 
-		}
+		std::cout << theComponent << std::endl;
 	}
 
 	

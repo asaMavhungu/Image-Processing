@@ -65,15 +65,13 @@ namespace MVHASA001
 		
 		void setImage(std::string filename);
 		void readImage(std::string filename, unsigned char threshold);
-		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
-		//void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
 		std::multiset<ConnectedComponent>& getComponents()
 		{
 			return components;
 		}
 
-		bool addComponent(ConnectedComponent comp)
+		void addComponent(ConnectedComponent comp)
 		{
 			this->components.insert(comp);
 			std::cout << "added comp " << comp << std::endl;
