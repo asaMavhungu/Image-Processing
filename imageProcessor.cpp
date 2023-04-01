@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <queue>
 #include <algorithm>
+#include <stack>
 
 using namespace std;
 
@@ -165,20 +166,38 @@ namespace MVHASA001
 
 	void PGMimageProcessor::floodFill(int row, int col, int target, int replacement)
 	{
-		// If the current cell is already the replacement value or is outside the bounds of the matrix, return
-		if (row < 0 || row >= int(this->source.size()) || col < 0 || col >= int(this->source[0].size()) || this->source[row][col] != target) 
+
+		int numRows = this->height;
+		int numCols = this->width;
+		int numComponents = 0;
+		vector<vector<bool>> visited(numRows, vector<bool>(numCols, false));
+		queue<pair<int, int>> q;
+
+		q.push(std::make_pair(row, col));
+
+		while (!q.empty()) 
 		{
-			return;
+			pair<int, int> p = q.front();
+			q.pop();
+			int row = p.first;
+			int col = p.second;
+
+			// check if cell is valid for painting
+			if (row < 0 || row >= int(this->source.size()) || col < 0 || col >= int(this->source[0].size()) || this->source[row][col] != target)
+			{
+				continue;
+			}
+
+			// Change color
+			source[row][col] = replacement;
+
+			// Push neighbor cells to Q
+			q.push(std::make_pair(row + 1, col));
+			q.push(std::make_pair(row - 1, col));
+			q.push(std::make_pair(row, col + 1));
+			q.push(std::make_pair(row, col - 1));
 		}
 
-		// Change color
-		source[row][col] = replacement;
-
-		// Recursively fill the neighboring cells
-		floodFill(row + 1, col, target, replacement);
-		floodFill(row - 1, col, target, replacement);
-		floodFill(row, col + 1, target, replacement);
-		floodFill(row, col - 1, target, replacement);
 	}
 
 	int PGMimageProcessor::calcBoundaries(const std::vector< std::pair<int,int> > & points)
