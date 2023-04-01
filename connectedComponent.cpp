@@ -44,6 +44,11 @@ namespace MVHASA001
 		return this->points[0];
 	}
 
+	std::vector<std::pair<int,int> > ConnectedComponent::getPoints()
+	{	
+		return this->points;
+	}
+
 	int MVHASA001::ConnectedComponent::getSize() const
 	{
 		return this->size;
@@ -52,6 +57,11 @@ namespace MVHASA001
 	void MVHASA001::ConnectedComponent::setSize(int i)
 	{
 		this->size = i;
+	}
+
+	void MVHASA001::ConnectedComponent::setBounds(int i)
+	{
+		this->boundaries = i;
 	}
 
 	std::ostream &operator<<(std::ostream &os, const ConnectedComponent &rhs)
