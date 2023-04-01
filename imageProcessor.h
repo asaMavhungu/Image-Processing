@@ -77,6 +77,10 @@ namespace MVHASA001
 			std::cout << "added comp " << comp << std::endl;
 		}
 
+		bool compareComponents (const std::multiset<ConnectedComponent> & lhs, const std::multiset<ConnectedComponent> & rhs)
+		{
+			return lhs.size() < rhs.size();
+		}
 		
 
 	};
