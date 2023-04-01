@@ -21,9 +21,7 @@ int main(int argc, char* argv[])
 	std::string inFilename = argv[argc - 1];
 	std::string outFileName = "";
 
-	PGMimageProcessor asa;
-
-	asa.setImage(inFilename);
+	PGMimageProcessor asa(inFilename);
 
 	
 
@@ -62,11 +60,16 @@ int main(int argc, char* argv[])
 	//PGMimageProcessor asa;
 	//std::string filename3 = "chess.pgm";
 
-	asa.setImage(inFilename);
 	//asa.extractComponents(127, 3);
 	//int maxSize = asa.getSourceSize();
 
-
+	std::cout << asa.extractComponents(threshold, minSize) << " ------\n";
+	std::cout << "Num: " << asa.getComponentCount() << endl;
+	std::cout << asa.extractComponents(threshold, minSize) << " ------\n";
+	std::cout << "Num: " << asa.getComponentCount() << endl;
+	std::cout << asa.extractComponents(threshold, minSize) << " ------\n";
+	std::cout << "Num: " << asa.getComponentCount() << endl;
+	maxSize = asa.getSourceSize();
 	std::cout << minSize << " MIN "<< std::endl
 		<< maxSize << " MAX" << std::endl
 		<< threshold << " THRESH" << std::endl
@@ -76,7 +79,7 @@ int main(int argc, char* argv[])
 
 
 	//177/178 for chess
-	std::cout << asa.extractComponents(threshold, minSize) << " ------\n";
+	//std::cout << asa.extractComponents(threshold, minSize) << " ------\n";
 	//cout << asa.getComponents()[0] <<" ONE\n";
 	//cout << asa.getComponents()[2] <<" ONE\n";
 
