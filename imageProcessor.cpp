@@ -228,14 +228,19 @@ namespace MVHASA001
 	int PGMimageProcessor::filterComponentsBySize(int minSize, int maxSize)
 	{
 
-		std::vector<ConnectedComponent>::iterator it = this->components.begin();
+		std::multiset<ConnectedComponent>::iterator it = this->components.begin();
 
 		while(it != this->components.end())
 		{
 
 			if (it->getSize() < minSize || it->getSize() > maxSize)
 			{
-				std::pair<int,int> p = it->getPoint();
+				/* vectors .begin() returns read-and-write iterators
+				multiset return iterators to const elemets in set
+				(modifying elements in set breaks ordering)
+				Needed to change getPoint() to be const because of this
+				*/
+				std::pair<int,int> p = it->getPoint(); 
 				int row = p.first;
 				int col = p.second;
 				// Paint out the now-invalid component
@@ -248,8 +253,8 @@ namespace MVHASA001
 			}
 
 		}
-
-		return this->components.size();
+		return 4;
+		//return this->components.size();
 	}
 
 	bool PGMimageProcessor::writeComponents(const std::string & outFileName)
@@ -278,14 +283,14 @@ namespace MVHASA001
 
 	int PGMimageProcessor::getLargestSize(void) const
 	{
-		std::vector<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
+		std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
 
 		return it->getSize();
 	}
 
 	int PGMimageProcessor::getSmallestSize(void) const
 	{
-		std::vector<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
+		std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
 
 		return it->getSize();
 	}

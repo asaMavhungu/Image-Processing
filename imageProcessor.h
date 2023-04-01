@@ -5,6 +5,8 @@
 
 #include <string>
 #include <iostream>
+#include <set>
+
 namespace MVHASA001
 {
 
@@ -17,7 +19,7 @@ namespace MVHASA001
 			std::string sourceName;
 			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
-			std::vector<ConnectedComponent> components;
+			std::multiset<ConnectedComponent> components;
 			int sourceSize;
 			std::string comment;
 
@@ -66,14 +68,14 @@ namespace MVHASA001
 		void process(vector<vector<unsigned char>> &image, int threshold, int width, int height);
 		//void flood_fill(vector<vector<unsigned char>>& grid, int row, int col);
 
-		std::vector<ConnectedComponent>& getComponents()
+		std::multiset<ConnectedComponent>& getComponents()
 		{
 			return components;
 		}
 
 		bool addComponent(ConnectedComponent comp)
 		{
-			this->components.push_back(comp);
+			this->components.insert(comp);
 			std::cout << "added comp " << comp << std::endl;
 		}
 
