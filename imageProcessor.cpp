@@ -48,6 +48,22 @@ namespace MVHASA001
 		other.comment = "";
 	}
 
+	PGMimageProcessor& PGMimageProcessor::operator=(PGMimageProcessor& other)
+	{
+		if (this != &other)
+		{
+			this->width = other.width;
+			this->height = other.height;
+			this->sourceName = other.sourceName;
+			this->source = other.source;
+			this->components = other.components;
+			this->sourceSize = other.sourceSize;
+			this->comment = other.comment;
+
+		}
+		return *this;
+	}
+
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;
