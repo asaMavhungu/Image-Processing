@@ -32,7 +32,7 @@ namespace MVHASA001
 
 			std::pair<int,int> getPoint() const;
 
-			std::vector<std::pair<int,int> > getPoints();
+			const std::vector<std::pair<int,int> > & getPoints() const;
 
 			int getSize() const;
 			void setSize(int i);

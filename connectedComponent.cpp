@@ -44,7 +44,8 @@ namespace MVHASA001
 		return this->points[0];
 	}
 
-	std::vector<std::pair<int,int> > ConnectedComponent::getPoints()
+
+	const std::vector<std::pair<int,int> > & ConnectedComponent::getPoints() const
 	{	
 		return this->points;
 	}
