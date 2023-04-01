@@ -59,7 +59,6 @@ namespace MVHASA001
 				in.read((char*)&pixels[i][j], 1);
 			}
 		}
-		// TODO make sure sont need original data
 		// this->source = pixels; // save original sorce
 
 		// Set background and forground
@@ -172,7 +171,6 @@ namespace MVHASA001
 					int size = 0;
 
 					// Start new connected component
-					// TODO make array to hold the pixels(x, y) changed to store in component
 					std::shared_ptr comp = std::make_shared<ConnectedComponent>(numComponents);
 					//cout << comp->getSize() << size << endl;
 					while (!q.empty()) 
@@ -246,18 +244,23 @@ namespace MVHASA001
 	int PGMimageProcessor::filterComponentsBySize(int minSize, int maxSize)
 	{
 
-		std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>::iterator it = this->components.begin();
+		/* vectors .begin() returns read-and-write iterators
+		multiset return iterators to const elemets in set
+		(modifying elements in set breaks ordering)
+		Needed to change getPoint() to be const because of this
+		*/
+		std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>::iterator it;
 
+		/* The set is already sorted.
+		It is faster to remove elements from both ends instrad of 
+		looping through the entire container
+		*/
+
+		it = this->components.begin();
 		while(it != this->components.end())
 		{
-
-			if ((*it)->getSize() < minSize || (*it)->getSize() > maxSize)
+			if ((*it)->getSize() < minSize)
 			{
-				/* vectors .begin() returns read-and-write iterators
-				multiset return iterators to const elemets in set
-				(modifying elements in set breaks ordering)
-				Needed to change getPoint() to be const because of this
-				*/
 				std::pair<int,int> p = (*it)->getPoint(); 
 				int row = p.first;
 				int col = p.second;
@@ -267,7 +270,26 @@ namespace MVHASA001
 			}
 			else
 			{
-				++it;
+				break;
+			}
+
+		}
+
+		it = this->components.end();
+		while(it != this->components.begin())
+		{
+			--it;
+			if ((*it)->getSize() > maxSize)
+			{
+				std::pair<int,int> p = (*it)->getPoint(); 
+				int row = p.first;
+				int col = p.second;
+				floodFill(row, col, 255, 0);
+				it = this->components.erase(it);
+			}
+			else
+			{
+				break;
 			}
 
 		}
