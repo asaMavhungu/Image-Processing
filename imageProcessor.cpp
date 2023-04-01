@@ -135,13 +135,13 @@ namespace MVHASA001
 		return false;
 	}
 
-	void PGMimageProcessor::addComponent(ConnectedComponent comp)
+	void PGMimageProcessor::addComponent(std::shared_ptr<ConnectedComponent> comp)
 	{
 		this->components.insert(comp);
 		std::cout << "added comp " << comp << std::endl;
 	}
 
-	const std::multiset<ConnectedComponent, MVHASA001::compareComponents>& PGMimageProcessor::getComponents() const
+	const std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>& PGMimageProcessor::getComponents() const
 	{
 		return components;
 	}
@@ -173,7 +173,7 @@ namespace MVHASA001
 
 					// Start new connected component
 					// TODO make array to hold the pixels(x, y) changed to store in component
-					ConnectedComponent *comp = new ConnectedComponent(numComponents);
+					std::shared_ptr comp = std::make_shared<ConnectedComponent>(numComponents);
 					//cout << comp->getSize() << size << endl;
 					while (!q.empty()) 
 					{
@@ -221,10 +221,8 @@ namespace MVHASA001
 					if (size <= minValidSize) 
 					{
 						//cout << "did not make component " << size << endl;
-						// TODO make and not make components
 						// Paint out the now-invalid component
 						floodFill(i, j, 255, 0);
-						delete comp;
 						--numComponents; 
 					}
 					else 
@@ -233,8 +231,7 @@ namespace MVHASA001
 						const std::vector< std::pair<int,int> > & points = comp->getPoints();
 						int numBounds = calcBoundaries(points);
 						comp->setBounds(numBounds);
-						this->addComponent(*comp);
-						delete comp;
+						this->addComponent(comp);
 						//cout << this->components[0] <<" ONE\n";
 					}
 					//cout << "queue empty" << endl;
@@ -249,19 +246,19 @@ namespace MVHASA001
 	int PGMimageProcessor::filterComponentsBySize(int minSize, int maxSize)
 	{
 
-		std::multiset<ConnectedComponent>::iterator it = this->components.begin();
+		std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>::iterator it = this->components.begin();
 
 		while(it != this->components.end())
 		{
 
-			if (it->getSize() < minSize || it->getSize() > maxSize)
+			if ((*it)->getSize() < minSize || (*it)->getSize() > maxSize)
 			{
 				/* vectors .begin() returns read-and-write iterators
 				multiset return iterators to const elemets in set
 				(modifying elements in set breaks ordering)
 				Needed to change getPoint() to be const because of this
 				*/
-				std::pair<int,int> p = it->getPoint(); 
+				std::pair<int,int> p = (*it)->getPoint(); 
 				int row = p.first;
 				int col = p.second;
 				// Paint out the now-invalid component
@@ -306,8 +303,8 @@ namespace MVHASA001
 		// Uses overload '<' of connected component by default
 		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
 
-		std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
-		return it->getSize();
+		std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
+		return (*it)->getSize();
 	}
 
 	int PGMimageProcessor::getSmallestSize(void) const
@@ -315,8 +312,8 @@ namespace MVHASA001
 		// Uses overload '<' of connected component by default
 		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
 
-		std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
-		return it->getSize();
+		std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
+		return (*it)->getSize();
 	}
 
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const

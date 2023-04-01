@@ -6,15 +6,16 @@
 #include <string>
 #include <iostream>
 #include <set>
+#include <memory>
 
 namespace MVHASA001
 {
 
 	struct compareComponents
 	{
-		bool operator()(const ConnectedComponent& lhs, const ConnectedComponent& rhs) const 
+		bool operator()(const std::shared_ptr<ConnectedComponent>& lhs, const std::shared_ptr<ConnectedComponent>& rhs) const 
 		{
-			return lhs.getSize() < rhs.getSize();
+			return (*lhs).getSize() < (*rhs).getSize();
 		}
 	};
 
@@ -27,7 +28,7 @@ namespace MVHASA001
 			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
 			// implemted 'compareComponents' as a functor
-			std::multiset<ConnectedComponent, compareComponents> components;
+			std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents> components;
 			int sourceSize;
 			std::string comment;
 
@@ -55,11 +56,11 @@ namespace MVHASA001
 
 		/* Add a component to the container
 		*/
-		void addComponent(ConnectedComponent comp);
+		void addComponent(std::shared_ptr<ConnectedComponent> comp);
 
 		/* Get read-only access to components in the container
 		*/
-		const std::multiset<ConnectedComponent, compareComponents>& getComponents() const;
+		const std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>& getComponents() const;
 
 		/* process the input image to extract all the connected components,
 		based on the supplied threshold (0...255) and excluding any components
