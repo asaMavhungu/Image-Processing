@@ -26,7 +26,6 @@ namespace MVHASA001
 			char *id;
 			std::string sourceName;
 			std::vector<std::vector<unsigned char>> source;
-			std::vector<std::vector<unsigned char>> sourceProcessed;
 			// implemted 'compareComponents' as a functor
 			std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents> components;
 			int sourceSize;
@@ -39,6 +38,8 @@ namespace MVHASA001
 		PGMimageProcessor(std::string srcName); // par constructor
 
 		~PGMimageProcessor(); // destructor
+
+		PGMimageProcessor(const PGMimageProcessor& other); // copy constructor
 
 		/* Set image filename
 		*/
