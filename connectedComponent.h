@@ -13,6 +13,7 @@ namespace MVHASA001
 		private:
 			int id;
 			int size = 0;
+			int boundaries = 0;
 			std::vector< std::pair<int,int> > points;
 		public:
 			ConnectedComponent(); // default construct
@@ -31,8 +32,11 @@ namespace MVHASA001
 
 			std::pair<int,int> getPoint() const;
 
+			std::vector<std::pair<int,int> > getPoints();
+
 			int getSize() const;
 			void setSize(int i);
+			void setBounds(int i);
 
 			// for sorting
 			bool operator<(const ConnectedComponent& other) const;
