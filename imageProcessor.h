@@ -28,7 +28,7 @@ namespace MVHASA001
 			std::vector<std::vector<unsigned char>> source;
 			// implemted 'compareComponents' as a functor
 			std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents> components;
-			int sourceSize;
+			int sourceSize = 0;
 			std::string comment;
 
 		public:
@@ -46,6 +46,8 @@ namespace MVHASA001
 		PGMimageProcessor& operator=(PGMimageProcessor& other); // copy assignment
 
 		PGMimageProcessor& operator=(PGMimageProcessor&& other); // move assignment
+
+		int getSourceSize() const;
 
 		/* Set image filename
 		*/
