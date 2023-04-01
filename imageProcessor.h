@@ -10,6 +10,13 @@
 namespace MVHASA001
 {
 
+	struct compareComponents
+	{
+		bool operator()(const ConnectedComponent& lhs, const ConnectedComponent& rhs) const 
+		{
+			return lhs.getSize() < rhs.getSize();
+		}
+	};
 
 	class PGMimageProcessor
 	{
@@ -19,13 +26,40 @@ namespace MVHASA001
 			std::string sourceName;
 			std::vector<std::vector<unsigned char>> source;
 			std::vector<std::vector<unsigned char>> sourceProcessed;
-			std::multiset<ConnectedComponent> components;
+			// implemted 'compareComponents' as a functor
+			std::multiset<ConnectedComponent, compareComponents> components;
 			int sourceSize;
 			std::string comment;
 
 		public:
 
-		friend void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement);
+		/* Set image filename
+		*/
+		void setImage(std::string filename);
+
+		/* Read image filename and process it with a given threshold
+		*/
+		void readImage(std::string filename, unsigned char threshold);
+
+		/* Use flood_fill algorithm to color a section of the image
+		*/
+		void floodFill( int row, int col, int target, int replacement);
+
+		/* Calculate number of boundary pixels
+		*/
+		int calcBoundaries(const std::vector< std::pair<int,int> > & points);
+
+		/* Check if pixel at co-ordinates if a boundary pixel
+		*/
+		bool isBoundary(const std::pair<int,int> & point) const;
+
+		/* Add a component to the container
+		*/
+		void addComponent(ConnectedComponent comp);
+
+		/* Get read-only access to components in the container
+		*/
+		const std::multiset<ConnectedComponent, compareComponents>& getComponents() const;
 
 		/* process the input image to extract all the connected components,
 		based on the supplied threshold (0...255) and excluding any components
@@ -63,29 +97,10 @@ namespace MVHASA001
 		*/
 		void printComponentData(const ConnectedComponent & theComponent) const;
 		
-		void setImage(std::string filename);
-		void readImage(std::string filename, unsigned char threshold);
-
-		std::multiset<ConnectedComponent>& getComponents()
-		{
-			return components;
-		}
-
-		void addComponent(ConnectedComponent comp)
-		{
-			this->components.insert(comp);
-			std::cout << "added comp " << comp << std::endl;
-		}
-
-		bool compareComponents (const std::multiset<ConnectedComponent> & lhs, const std::multiset<ConnectedComponent> & rhs)
-		{
-			return lhs.size() < rhs.size();
-		}
-		
 
 	};
 
-	
+
 
 }
 
