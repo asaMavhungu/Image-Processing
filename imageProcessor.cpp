@@ -13,6 +13,8 @@ using namespace std;
 namespace MVHASA001
 {
 
+	PGMimageProcessor::PGMimageProcessor(): width(0), height(0), id(nullptr), sourceSize(0) {}
+
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;

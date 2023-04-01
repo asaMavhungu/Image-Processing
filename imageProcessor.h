@@ -34,6 +34,8 @@ namespace MVHASA001
 
 		public:
 
+		PGMimageProcessor();// default constructor
+
 		/* Set image filename
 		*/
 		void setImage(std::string filename);
