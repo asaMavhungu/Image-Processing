@@ -38,6 +38,8 @@ namespace MVHASA001
 
 		PGMimageProcessor(std::string srcName); // par constructor
 
+		~PGMimageProcessor(); // destructor
+
 		/* Set image filename
 		*/
 		void setImage(std::string filename);

@@ -18,7 +18,8 @@ namespace MVHASA001
 
 	PGMimageProcessor::PGMimageProcessor(std::string srcName) : width(0), height(0), id(nullptr), sourceName(srcName), sourceSize(0), comment("") {}
 
-
+	PGMimageProcessor::PGMimageProcessor() = default;
+	
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;
