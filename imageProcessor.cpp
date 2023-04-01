@@ -91,24 +91,59 @@ namespace MVHASA001
 		return (row >= 0 && row < numRows && col >= 0 && col < numCols);
 	}
 
-	void floodFill(std::vector<std::vector<unsigned char>> & source, int row, int col, int target, int replacement)
+	void PGMimageProcessor::floodFill(int row, int col, int target, int replacement)
 	{
 		// If the current cell is already the replacement value or is outside the bounds of the matrix, return
-		if (row < 0 || row >= int(source.size()) || col < 0 || col >= int(source[0].size()) || source[row][col] != target) 
+		if (row < 0 || row >= int(this->source.size()) || col < 0 || col >= int(this->source[0].size()) || this->source[row][col] != target) 
 		{
-			std::cout << row << " " << col << " " << target << std::endl;
 			return;
 		}
 
 		// Change color
 		source[row][col] = replacement;
-		std::cout << row << col << std::endl;
 
 		// Recursively fill the neighboring cells
-		floodFill(source, row + 1, col, target, replacement);
-		floodFill(source, row - 1, col, target, replacement);
-		floodFill(source, row, col + 1, target, replacement);
-		floodFill(source, row, col - 1, target, replacement);
+		floodFill(row + 1, col, target, replacement);
+		floodFill(row - 1, col, target, replacement);
+		floodFill(row, col + 1, target, replacement);
+		floodFill(row, col - 1, target, replacement);
+	}
+
+	int PGMimageProcessor::calcBoundaries(const std::vector< std::pair<int,int> > & points)
+	{	
+		int bounds = std::count_if(points.begin(), points.end(), [this](const std::pair<int,int>& point) { return this->isBoundary(point); });
+		return bounds;
+	}
+
+	bool PGMimageProcessor::isBoundary(const std::pair<int,int> & point) const
+	{
+		int row = point.first;
+		int col = point.second;
+
+		if (isSafe(row-1, col, height, width) && this->source[row-1][col] != this->source[row][col]) 
+			return true;
+
+		if (isSafe(row+1, col, height, width) && this->source[row+1][col] != this->source[row][col]) 
+			return true;
+
+		if (isSafe(row, col-1, height, width) && this->source[row][col-1] != this->source[row][col]) 
+			return true;
+
+		if (isSafe(row, col+1, height, width) && this->source[row][col+1] != this->source[row][col]) 
+			return true;
+
+		return false;
+	}
+
+	void PGMimageProcessor::addComponent(ConnectedComponent comp)
+	{
+		this->components.insert(comp);
+		std::cout << "added comp " << comp << std::endl;
+	}
+
+	const std::multiset<ConnectedComponent, MVHASA001::compareComponents>& PGMimageProcessor::getComponents() const
+	{
+		return components;
 	}
 
 	int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize)
@@ -188,13 +223,16 @@ namespace MVHASA001
 						//cout << "did not make component " << size << endl;
 						// TODO make and not make components
 						// Paint out the now-invalid component
-						floodFill(this->source, i, j, 255, 0);
+						floodFill(i, j, 255, 0);
 						delete comp;
 						--numComponents; 
 					}
 					else 
 					{
 						comp->setSize(size);
+						const std::vector< std::pair<int,int> > & points = comp->getPoints();
+						int numBounds = calcBoundaries(points);
+						comp->setBounds(numBounds);
 						this->addComponent(*comp);
 						delete comp;
 						//cout << this->components[0] <<" ONE\n";
@@ -227,7 +265,7 @@ namespace MVHASA001
 				int row = p.first;
 				int col = p.second;
 				// Paint out the now-invalid component
-				floodFill(this->source, row, col, 255, 0);
+				floodFill(row, col, 255, 0);
 				it = this->components.erase(it);
 			}
 			else
@@ -236,8 +274,7 @@ namespace MVHASA001
 			}
 
 		}
-		return 4;
-		//return this->components.size();
+		return this->components.size();
 	}
 
 	bool PGMimageProcessor::writeComponents(const std::string & outFileName)
@@ -267,18 +304,18 @@ namespace MVHASA001
 	int PGMimageProcessor::getLargestSize(void) const
 	{	
 		// Uses overload '<' of connected component by default
-		//std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
+		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
 
-		std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), compareComponents);
+		std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
 		return it->getSize();
 	}
 
 	int PGMimageProcessor::getSmallestSize(void) const
 	{
 		// Uses overload '<' of connected component by default
-		//std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
+		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
 
-		std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), compareComponents);
+		std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
 		return it->getSize();
 	}
 
