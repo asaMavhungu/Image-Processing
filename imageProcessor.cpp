@@ -265,16 +265,20 @@ namespace MVHASA001
 	}
 
 	int PGMimageProcessor::getLargestSize(void) const
-	{
-		std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
+	{	
+		// Uses overload '<' of connected component by default
+		//std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
 
+		std::multiset<ConnectedComponent>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), compareComponents);
 		return it->getSize();
 	}
 
 	int PGMimageProcessor::getSmallestSize(void) const
 	{
-		std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
+		// Uses overload '<' of connected component by default
+		//std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
 
+		std::multiset<ConnectedComponent>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), compareComponents);
 		return it->getSize();
 	}
 
