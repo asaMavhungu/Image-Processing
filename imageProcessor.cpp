@@ -87,6 +87,11 @@ namespace MVHASA001
 		return *this;
 	}
 
+	int PGMimageProcessor::getSourceSize() const
+	{
+		return this->sourceSize;
+	}
+
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;
@@ -241,7 +246,10 @@ namespace MVHASA001
 	{
 		using namespace std;
 
-		readImage(this->sourceName, threshold);
+		// clear set before re-extracting
+		this->components.clear();
+		if (this->sourceSize == 0)
+			readImage(this->sourceName, threshold);
 
 		int numRows = this->height;
 		int numCols = this->width;
