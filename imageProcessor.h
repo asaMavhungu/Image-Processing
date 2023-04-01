@@ -45,6 +45,8 @@ namespace MVHASA001
 
 		PGMimageProcessor& operator=(PGMimageProcessor& other); // copy assignment
 
+		PGMimageProcessor& operator=(PGMimageProcessor&& other); // move assignment
+
 		/* Set image filename
 		*/
 		void setImage(std::string filename);
