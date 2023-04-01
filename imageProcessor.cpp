@@ -31,6 +31,23 @@ namespace MVHASA001
 		this->comment = other.comment;
 	}
 
+	PGMimageProcessor::PGMimageProcessor(PGMimageProcessor&& other)
+	{
+		this->width = other.width;
+    	this->height = other.height;
+		this->sourceName = std::move(other.sourceName);
+    	this->source = std::move(other.source);
+		this->components = std::move(other.components);
+		this->sourceSize = other.sourceSize;
+		this->comment = std::move(other.comment);
+
+		other.width = 0;
+		other.height = 0;
+		other.sourceSize = 0;
+		other.sourceName = "";
+		other.comment = "";
+	}
+
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;

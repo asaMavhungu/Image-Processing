@@ -41,6 +41,8 @@ namespace MVHASA001
 
 		PGMimageProcessor(const PGMimageProcessor& other); // copy constructor
 
+		PGMimageProcessor(PGMimageProcessor&& other); // move constructor
+
 		/* Set image filename
 		*/
 		void setImage(std::string filename);
