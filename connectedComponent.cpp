@@ -1,4 +1,5 @@
 #include "connectedComponent.h"
+#include <iostream>
 
 using namespace MVHASA001;
 
@@ -36,6 +37,9 @@ namespace MVHASA001
 	ConnectedComponent &ConnectedComponent::operator+=(const std::pair<int, int> &rhs)
 	{
 		this->points.push_back(rhs);
+		//int row = rhs.first;
+		//int col = rhs.second;
+		//std::cout << row << " " << col << " " << std::endl;
 		return *this;
 	}
 
@@ -58,6 +62,11 @@ namespace MVHASA001
 	void MVHASA001::ConnectedComponent::setSize(int i)
 	{
 		this->size = i;
+	}
+
+	int MVHASA001::ConnectedComponent::getBounds() const
+	{
+		return this->boundaries;
 	}
 
 	void MVHASA001::ConnectedComponent::setBounds(int i)

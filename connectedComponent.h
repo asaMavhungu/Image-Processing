@@ -36,6 +36,8 @@ namespace MVHASA001
 
 			int getSize() const;
 			void setSize(int i);
+
+			int getBounds() const;
 			void setBounds(int i);
 
 			// for sorting
