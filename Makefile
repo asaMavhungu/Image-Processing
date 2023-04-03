@@ -20,4 +20,4 @@ test: clean $(EXECUTABLE)
 
 # Remove executable and object files
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -f *.o *.out
