@@ -73,6 +73,10 @@ namespace MVHASA001
 		*/
 		void addComponent(std::shared_ptr<ConnectedComponent> comp);
 
+		/* Get the reference of the object a smart pointer at 'index' manages.
+		*/
+		const ConnectedComponent & getComponent(int index) const;
+
 		/* Get read-only access to components in the container
 		*/
 		const std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>& getComponents() const;
