@@ -27,7 +27,7 @@ def save_inverted_pgm(image, filename):
         f.write(data)
 
 # size of the image
-width, height = 500, 500
+width, height = 505, 505
 
 # create a new image
 img = Image.new('L', (width, height), color='black')
@@ -54,7 +54,9 @@ for size, position, fill_color in zip(sizes, positions, fill_colors):
 
     # compute the grayscale value using the formula
     gray_value = int(0.2989 * rgb_color[0] + 0.5870 * rgb_color[1] + 0.1140 * rgb_color[2])
-    print(gray_value)
+    print(f"Square of len {size+1}, area {(size+1)**2}, boundary pixels {4*(size+1)-4} and color {gray_value}")
+    # boundary pixels is 4xlen i.e. 4*(size+1) 
+    # in this boundary, the 4 corner pixel is counted twice, so mis 4 to get real answer
 
 # save the image as a PGM file
 save_pgm(img, 'squares.pgm')
