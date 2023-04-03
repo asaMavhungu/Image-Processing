@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -std=c++20 # Enable all compiler warnings, Use C++20
 
 SOURCES = imageProcessor.cpp connectedComponent.cpp
 DRIVER = $(if $(filter test,$(MAKECMDGOALS)),driver_test.cpp,driver.cpp)
-EXECUTABLE = $(DRIVER:.cpp=.out)
+EXECUTABLE = $(if $(filter driver_test.cpp,$(DRIVER)),test.out,findcomp.out)
 OBJECTS = $(SOURCES:.cpp=.o) $(DRIVER:.cpp=.o)
 
 # Compile executable file
