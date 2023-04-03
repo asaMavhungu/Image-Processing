@@ -295,7 +295,7 @@ namespace MVHASA001
 						int row = p.first;
 						int col = p.second;
 
-						std::pair<int,int> p1 = std::make_pair(i,j);
+						std::pair<int,int> p1 = std::make_pair(row,col);
 						*comp += p1;
 
 						++size;
@@ -345,7 +345,6 @@ namespace MVHASA001
 						int numBounds = calcBoundaries(points);
 						comp->setBounds(numBounds);
 						this->addComponent(comp);
-						//cout << this->components[0] <<" ONE\n";
 					}
 					//cout << "queue empty" << endl;
 				}
