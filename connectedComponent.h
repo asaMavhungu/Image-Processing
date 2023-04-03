@@ -34,6 +34,8 @@ namespace MVHASA001
 
 			const std::vector<std::pair<int,int> > & getPoints() const;
 
+			int getID() const;
+			
 			int getSize() const;
 			void setSize(int i);
 
