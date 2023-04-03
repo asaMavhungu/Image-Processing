@@ -237,6 +237,21 @@ namespace MVHASA001
 		std::cout << "added comp " << comp << std::endl;
 	}
 
+	const ConnectedComponent & PGMimageProcessor::getComponent(int index) const
+	{
+		if (index < 0 || index >= this->components.size()) 
+		{
+			// index out of bounds error
+			throw std::out_of_range("Index out of bounds");
+		}
+
+		std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>::iterator it;
+
+		it = std::next(this->components.begin(), index);
+
+		return *(*it);
+	}
+
 	const std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>& PGMimageProcessor::getComponents() const
 	{
 		return components;
