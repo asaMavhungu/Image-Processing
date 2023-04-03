@@ -1,8 +1,10 @@
 CC = g++
 CFLAGS = -Wall -Wextra -std=c++20 # Enable all compiler warnings, Use C++20
-EXECUTABLE = a.out # Name of executable, *.out for unix executile
-SOURCES = imageProcessor.cpp connectedComponent.cpp driver.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
+
+SOURCES = imageProcessor.cpp connectedComponent.cpp
+DRIVER = $(if $(filter test,$(MAKECMDGOALS)),driver_test.cpp,driver.cpp)
+EXECUTABLE = $(DRIVER:.cpp=.out)
+OBJECTS = $(SOURCES:.cpp=.o) $(DRIVER:.cpp=.o)
 
 # Compile executable file
 $(EXECUTABLE): $(OBJECTS)
@@ -12,6 +14,10 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Reamove executable and object files
+# Compile test executable
+test: DRIVER = driver_test.cpp
+test: clean $(EXECUTABLE)
+
+# Remove executable and object files
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
