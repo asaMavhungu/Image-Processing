@@ -15,12 +15,13 @@ int main(int argc, char* argv[])
 	int threshold = 55;
 
 	bool printOut = false;
+	bool allInfo = false;
 	bool writeOut = false;
 
 	std::string inFilename = argv[argc - 1];
 	std::string outFileName = "";
 
-	PGMimageProcessor asa(inFilename);
+	PGMimageProcessor a(inFilename);
 
 	
 
@@ -43,6 +44,10 @@ int main(int argc, char* argv[])
 		{
 			printOut = true;
 		}
+		if ( strcmp( argv[i], "-b") == 0)
+		{
+			allInfo = true;
+		}
 		if ( strcmp( argv[i], "-w") == 0)
 		{
 			writeOut = true;
@@ -51,21 +56,33 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	asa.extractComponents(threshold, minSize);
+	a.extractComponents(threshold, minSize);
 	if (!maxSet)
-		maxSize = asa.getSourceSize();
+		maxSize = a.getSourceSize();
 	
-	asa.filterComponentsBySize(minSize, maxSize);
+	a.filterComponentsBySize(minSize, maxSize);
 	if (printOut)
 	{
-		for (int i = 0; i < asa.getComponentCount(); ++i)
+		for (int i = 0; i < a.getComponentCount(); ++i)
 		{
-			asa.printComponentData(asa.getComponent(i));
+			a.printComponentData(a.getComponent(i));
 		}
+		std::cout << "Smallest size: " << a.getSmallestSize() << std::endl;
+		std::cout << "Largest size: " << a.getLargestSize() << std::endl;
 	}
+	if (allInfo)
+	{
+		for (int i = 0; i < a.getComponentCount(); ++i)
+		{
+			a.printAllComponentData(a.getComponent(i));
+		}
+		std::cout << "Smallest size: " << a.getSmallestSize() << std::endl;
+		std::cout << "Largest size: " << a.getLargestSize() << std::endl;
+	}
+
 	if (writeOut)
 	{
-		asa.writeComponents(outFileName);
+		a.writeComponents(outFileName);
 	}
 
 	
