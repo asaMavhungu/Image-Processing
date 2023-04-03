@@ -85,6 +85,11 @@ namespace MVHASA001
 		return os;
 	}
 
+	void MVHASA001::ConnectedComponent::getMoreInfo() const
+	{
+		std::cout << this << " " << this->boundaries << std::endl;
+	}
+
 	bool ConnectedComponent::operator<(const ConnectedComponent& other) const
 	{
 		return this->size < other.size;

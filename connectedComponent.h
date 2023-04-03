@@ -42,6 +42,8 @@ namespace MVHASA001
 			int getBounds() const;
 			void setBounds(int i);
 
+			void getMoreInfo() const;
+
 			// for sorting
 			bool operator<(const ConnectedComponent& other) const;
 
