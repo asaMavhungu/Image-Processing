@@ -49,6 +49,8 @@ namespace MVHASA001
 
 		int getSourceSize() const;
 
+		std::string getSourceName() const;
+
 		/* Set image filename
 		*/
 		void setImage(std::string filename);

@@ -92,6 +92,11 @@ namespace MVHASA001
 		return this->sourceSize;
 	}
 
+	std::string PGMimageProcessor::getSourceName() const
+	{
+		return this->sourceName;
+	}
+
 	void PGMimageProcessor::setImage(string filename)
 	{
 		this->sourceName = filename;
