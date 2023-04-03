@@ -1,15 +1,16 @@
 # Image-Processing
 CSC3022F Assignment 3 - Image processing with connected components
 
-This project is an XML parser implemented in C++ which can do the following:
+This project is an image processor implemented in C++ which can do the following:
 
-* Read in a file directory to an XML file and parse it
-* Print out the information on the parsed file regarding the different tags and their content
-* Write said information into a file name 'tags.txt'
-* Print out information on a specific tag from the parsed file
+* Read in an input PGM file
+* Color code the background/foreground pixelgroups
+* extract foreground pixels groups into `ConnectedComponent` objects
+* Print out information on about the components
+* Print out the color coded input image
 
 ## Usage
-`$ findcomp [options] <inputPGMfile>`
+`$ findcomp.out [options] <inputPGMfile>`
 
 `<inputPGMfile>` is a valid PGM image
 
