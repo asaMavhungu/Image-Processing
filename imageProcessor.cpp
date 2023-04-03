@@ -239,7 +239,7 @@ namespace MVHASA001
 	void PGMimageProcessor::addComponent(std::shared_ptr<ConnectedComponent> comp)
 	{
 		this->components.insert(comp);
-		std::cout << "added comp " << comp << std::endl;
+		//std::cout << "added comp " << comp << std::endl;
 	}
 
 	const ConnectedComponent & PGMimageProcessor::getComponent(int index) const
@@ -336,7 +336,7 @@ namespace MVHASA001
 							//cout << "queued" << row <<col+1<< endl;
 						}
 					}
-					if (size <= minValidSize) 
+					if (size < minValidSize) 
 					{
 						//cout << "did not make component " << size << endl;
 						// Paint out the now-invalid component
@@ -444,8 +444,14 @@ namespace MVHASA001
 		// Uses overload '<' of connected component by default
 		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end());
 
-		std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>::const_iterator it = std::max_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
-		return (*it)->getSize();
+		std::multiset<std::shared_ptr<ConnectedComponent>, compareComponents>::const_reverse_iterator rit = components.rbegin();  // Get reverse iterator pointing to last element
+		if (rit != components.rend()) 
+		{
+			ConnectedComponent* lastComp = rit->get();
+			return lastComp->getSize();
+		}
+
+		return 0;
 	}
 
 	int PGMimageProcessor::getSmallestSize(void) const
@@ -454,7 +460,15 @@ namespace MVHASA001
 		// std::multiset<ConnectedComponent, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end());
 
 		std::multiset<std::shared_ptr<ConnectedComponent>, MVHASA001::compareComponents>::const_iterator it = std::min_element(this->components.begin(), this->components.end(), MVHASA001::compareComponents());
-		return (*it)->getSize();
+		
+		if (it != components.end()) 
+		{
+			ConnectedComponent* lastComp = it->get();
+			return lastComp->getSize();
+		}
+
+		return 0;
+
 	}
 
 	void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const
