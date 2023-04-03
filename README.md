@@ -67,3 +67,8 @@ When `a.extractComponents(threshold, minSize)` is called, the input file is conv
 `writeComponents(const std::string & outFileName)` will write out all the data in the processed image that is in memory, out to a file and name it the parameter in the `outFileName` field
 
 `calcBoundaries(const std::vector< std::pair<int,int> > & points)` calculates how many points in the vector are boundary points. It call on the `isBoundary(const std::pair<int,int> & point)` function on each point and uses an algorithm similar to flood fill to get if the given point is a boundary point.
+
+## Testing
+
+Tests were ran using the squares.pgm file. To compile the test file, run `make test`.
+The square.pgm was made using a python script `spectral_square_sorcery.py`. This has dependacies that can be found in the requirements.txt file
