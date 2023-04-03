@@ -118,6 +118,8 @@ namespace MVHASA001
 		print out to std::cout: component ID, number of pixels
 		*/
 		void printComponentData(const ConnectedComponent & theComponent) const;
+
+		void printAllComponentData(const ConnectedComponent & theComponent) const;
 		
 
 	};

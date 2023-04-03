@@ -476,6 +476,11 @@ namespace MVHASA001
 		std::cout << theComponent << std::endl;
 	}
 
+	void PGMimageProcessor::printAllComponentData(const ConnectedComponent & theComponent) const
+	{
+		std::cout << theComponent << ", Bounds: " << theComponent.getBounds() << std::endl;
+	}
+
 	
 
 
